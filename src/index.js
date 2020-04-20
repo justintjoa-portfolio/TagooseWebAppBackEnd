@@ -1,9 +1,18 @@
 import express from 'express';
-import path from 'path'
- 
+import path from 'path';
+import mongoose from 'mongoose';
+import auth from "./routes/auth";
+import bodyParser from "body-parser";
 
 const app = express();
+app.use(bodyParser.json());
+mongoose.connect('mongodb://localhost/Tagoose', 
+    {
+        useMongoClient: true
+    }
 
+);
+/*
 app.post('/api/auth', (req,res)=> {
     res.status(400).json( 
         {
@@ -13,6 +22,9 @@ app.post('/api/auth', (req,res)=> {
         }
     );
 });
+*/
+
+app.use("/api/auth", auth);
 
 app.get('/*', (req, res) => 
     {
