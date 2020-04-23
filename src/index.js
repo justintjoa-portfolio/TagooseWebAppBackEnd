@@ -1,35 +1,16 @@
-import express from 'express';
-import path from 'path';
-import mongoose from 'mongoose';
-import auth from "./routes/auth";
-import bodyParser from "body-parser";
+var users = require('./routes/users.js');
+var processimage = require('./routes/processimage.js')
+const express = require("express");
+const path = require("path")
 
-const app = express();
-app.use(bodyParser.json());
-mongoose.connect('mongodb://localhost/Tagoose', 
-    {
-        useMongoClient: true
-    }
+const app = express()
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+  });
 
-);
-/*
-app.post('/api/auth', (req,res)=> {
-    res.status(400).json( 
-        {
-            errors: {
-                global: "Invalid credentials"
-            }
-        }
-    );
-});
-*/
+app.use("/users", users);
+app.use("/processimage", processimage);
 
-app.use("/api/auth", auth);
+app.listen(3000, () => console.log("Running on localhost:3000"));
 
-app.get('/*', (req, res) => 
-    {
-        res.sendFile(path.join(__dirname,'index.html'));
-    }
-)
 
-app.listen(8080,()=> console.log("running  on localhost:8080"))
