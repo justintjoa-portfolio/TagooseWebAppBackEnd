@@ -1,9 +1,11 @@
+const {username,accountpassword} = require("./keys.js")
 const mysql = require('mysql');
+
 
 const con = mysql.createConnection({
     host: "tagoosedev.cm63orfguism.us-east-1.rds.amazonaws.com",
-    user: "root",
-    password: "fOrtranmyeggo124",
+    user: username,
+    password: accountpassword,
 });
 
 con.connect(function(err) {
